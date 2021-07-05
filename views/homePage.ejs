@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<title>Video Calling</title>
+<!-- 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+ -->
+	<style>
+		body {
+		  background-image: url("https://media.giphy.com/media/l2Sqf1fbj1qrmaJ6E/giphy.gif");
+		  background-color: #cccccc;
+		  height: 100%;
+		  width: 100%;
+
+		}
+		.bg{
+				margin: 0 auto;
+			  padding: 1rem;
+			  display: flex;
+			  align-items: center;
+			  width: 700px;
+			  padding-top: 15%;
+
+		}
+		.container{
+			width: 700px;
+		}
+		.button{
+			background-color: #747582;
+			color: #fff;
+			padding: 7%;
+			margin: 0;
+			width: 100%;
+			border: 4px black solid;
+
+			 /*border-radius: 57px 61px 56px;*/
+			 display: inline-flex;
+			/*padding-left: 2%;
+			padding-right: 2%;
+			
+			  
+			 
+			  margin: auto;
+			  font-size: 2rem;*/
+			  float: left;
+			  border-radius: 10px;
+		}
+		.join{
+			display: inline-flex;
+			float: left;
+			width: 100%;
+			margin-top: 10px;
+		}
+		.element{
+			 display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  font-size: 1.2rem;
+			  margin: 0 0.5rem;
+		}
+		#meet-link{
+			padding-left: 6%;
+			padding-left: 6%;
+			width: 50%;
+		}
+		.meet{
+			width: 50%;
+			padding-left: 6%;
+			padding-left: 6%;
+		}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container">
+		  <button type="buttosn" class="button element"  onclick=newmeet()>Start a new meeting</button><br/>
+		  <div class="join"><input type="text" name="meetLink" id="meet-link" class="element" placeholder="paste meet link">
+		  <button type="button" class="button element meet" onclick=joinmeet()>Join a meet</button></div>
+		</div>
+	<div>
+
+  <script>
+    function newmeet(){
+      window.location.replace('/engage');
+    }
+   function joinmeet(){
+      var link = document.getElementById("meet-link").value;
+      window.location.replace(link);
+    }
+  </script>
+</body>
+</html>

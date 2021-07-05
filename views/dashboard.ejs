@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Calling</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+     <link rel="stylesheet" href="/style.css" />
+    
+    <script src="https://kit.fontawesome.com/9d2575df47.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+    <script>
+      const ROOM_ID = "<%= roomId %>";
+    </script>
+  </head>
+  <body onload="time()">
+    <div id="users-list">
+        <ul id="list"><ul>
+    </div>
+<!--     <div class="header">
+      <div class="logo">
+        <div class="header__back">
+          <i class="fas fa-angle-left"></i>
+        </div>
+        <h3>Video Chat</h2>
+      </div>
+    </div> -->  
+    <div class="main">  
+    <div class="main__left">
+      <div class="videos__group">
+        <div id="video-grid">
+
+        </div>
+        
+      </div>
+
+      <div class="options">
+          <div class="panel">
+          <div id="stopVideo" data-toggle="tooltip" title="video on" class="options__button">
+            <i class="fas fa-video"></i>
+          </div>
+          <div id="muteButton" data-toggle="tooltip" title="unmute" class="options__button">
+
+            <i class="fas fa-microphone-alt"></i>
+          </div>
+
+          <div id="showChat" class="options__button">
+            <i class="fa fa-comment"></i>
+          </div>
+          
+              <div id="participants"  data-toggle="tooltip" title="participants" class="options__button">
+                <i class="fas fa-users"></i>
+              </div>
+             <div id="inviteButton" data-toggle="tooltip" title="copy invite link" class="options__button">
+                <i class="far fa-copy"></i>
+              </div>
+               <div id="endCall"  data-toggle="tooltip" title="Leave Call" class="options__button">
+                  <i class="end fa-solid fa-phone-slash"></i>
+              </div>
+        </div>
+
+        <div id="timer">
+        </div>
+      </div>
+    </div>
+    <div class="main__right">
+      <div class="main__chat_window">
+          <div class="messages">
+
+          </div>
+      </div>
+      <div class="main__message_container">
+        <input id="chat_message" type="text" autocomplete="off" placeholder="Type message here...">
+        <div id="send" class="options__button">
+          <i class="fas fa-arrow-circle-right" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+  <script src="/script.js"></script>
+</html>
