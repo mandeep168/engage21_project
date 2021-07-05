@@ -30,14 +30,18 @@
 }
 
 video {
-  height: 300px;
-  border-radius: 1rem;
-  margin: 0.5rem;
-  width: 400px;
-  object-fit: cover;
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-  -moz-transform: rotateY(180deg);
+  height: 189px;
+    border-radius: 1rem;
+    margin: 0.25rem;
+    width: 277px;
+    object-fit: cover;
+    transform: rotateY(
+    180deg
+    );
+        -webkit-transform: rotateY(
+    180deg
+    );
+        -moz-transform: rotateY(180deg);
 }
 
 
@@ -72,13 +76,13 @@ li{
 }
 
 #topText {
-  color: #131111;
-    font-size: 24px;
+      color: #131111;
+    font-size: 13px;
     font-weight: bold;
     font-family: sans-serif;
     background-color: #7b8792;
     display: inline;
-    padding: 5px;
+    padding: 3px;
     padding-left: 7px;
     padding-right: 7px;
     border-radius: 5px;
@@ -96,7 +100,7 @@ li{
   display: inline-flex;
   border: black 2px solid;
   border-radius: 57px 61px 56px;
-  padding: 1%;
+  padding: 0.5%;
   margin: auto;
   padding-left: 2%;
   padding-right: 2%;
@@ -106,11 +110,11 @@ li{
 #timer{
     color: #fff;
     border: 1px white solid;
-    padding: 17px;
+    padding: 6px;
     padding-left: 27px;
     padding-right: 27px;
     border-radius: 33px 36px 32px;
-    font-size:  1.67rem;
+    font-size: 1.25rem;
     background-color: #546e7a;
 }
 
@@ -119,12 +123,12 @@ li{
   justify-content: center;
   align-items: center;
   background-color: #546e7a;
-  height: 50px;
+  height: 30px;
   border-radius: 50%;
   color: #fff;
-  font-size: 1.2rem;
-  width: 50px;
+  width: 30px;
   margin: 0 0.5rem;
+  font-size: smaller;
 }
 .options__button:hover{
   cursor: pointer;
@@ -151,21 +155,20 @@ li{
 }
 
 .main__message_container {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .main__message_container > input {
-  height: 50px;
+  height: 35px;
   flex: 1;
   font-size: 1rem;
   border-radius: 5px;
   padding-left: 20px;
   border: none;
   font-family: sans-serif;
-  font-size: 1.45rem;
 }
 
 .messages {
@@ -193,10 +196,9 @@ li{
 
 .message > span {
   background-color: #eeeeee;
-  margin: 1rem 0;
-  padding: 1rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
   border-radius: 5px;
-  font-size: 1.45rem;
   font-family: sans-serif;
 }
 
