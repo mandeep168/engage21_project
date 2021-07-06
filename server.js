@@ -10,6 +10,15 @@ const io = require("socket.io")(server, {
   }
 });
 
+
+// const mongoose = require('mongoose');
+
+// const chatSchema = new mongoose.Schema({
+//   chatId : String,
+  
+// })
+
+
 // app.use("/peerjs", peerServer);
 app.use(express.static("public"));
 app.set("view engine", "ejs");

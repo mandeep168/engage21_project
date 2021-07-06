@@ -231,11 +231,17 @@ li{
   }
 
   video {
-    /*height: auto;*/
-    /*width: auto;*/
+    height: auto;
+    width: auto;
   }
 
   #showChat {
     display: flex;
+  }
+}
+
+@media (min-width:  1234px){
+  .panel{
+        margin-right: 26.5%;
   }
 }

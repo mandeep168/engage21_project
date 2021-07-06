@@ -135,9 +135,6 @@ const addVideoStream = (video, stream, userName,peerId) => {
     p.innerHTML = userName;
     name.append(p);
     container.append(video);
-    // console.log(container.innerHTML);
-    // let v = container.hasChildNodes();
-    // console.log(v);
     container.append(name);
     videoGrid.append(container);
 

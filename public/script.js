@@ -7,7 +7,7 @@ myVideo.muted = true;
 
 
 let user = prompt("Enter your name");
-while(user==='' || user === null){
+while(user === '' || user === null){
   user = prompt("Enter your name again");
 }
 
@@ -21,13 +21,16 @@ let myVideoStream;
 //     video: true,
 //   });
 
+
+// let stream = navigator.mediaDevices.getUserMedia({audio:true,video:true});
+
 navigator.mediaDevices
   .getUserMedia({
     audio: true,
     video: true,
   })
   .then((stream) => {
-    // myVideoStream = stream;
+    myVideoStream = stream;
     // console.log(peers);
     console.log("My video added!!!")
     addVideoStream(myVideo, stream,user,0);
