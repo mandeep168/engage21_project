@@ -69,7 +69,13 @@
     <div class="main__right">
       <div class="main__chat_window">
           <div class="messages">
-
+              <% msgs.forEach(function(msgs) { %>
+               <div class="message">
+                  <b><%= msgs.name %></b>
+                  <b class="time-in-message"><%= msgs.created %></b>
+                  <span> <%= msgs.msg %>
+                </span></div>
+              <% }); %>
           </div>
       </div>
       <div class="main__message_container">
@@ -81,6 +87,7 @@
     </div>
   </div>
   </body>
+  <!-- <script src="/chat-script">< -->
   <script src="/script.js"></script>
   <script src="/event_listeners.js"></script>
 </html>

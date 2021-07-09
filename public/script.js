@@ -1,18 +1,21 @@
 const socket = io("/");
 
+
+ // socket.emit("join-room");
+
 const myVideo = document.createElement("video");
 
 
 myVideo.muted = true;
-
 
 let user = prompt("Enter your name");
 while(user === '' || user === null){
   user = prompt("Enter your name again");
 }
 
+// console.log(peer);
 //1
-var peer = new Peer();
+ let peer = new Peer();
 
 let peers = {}
 let myVideoStream;
@@ -54,8 +57,7 @@ navigator.mediaDevices
       call.on("stream", (userVideoStream) => {
         console.log("ansewered")
         f_answer+=1;
-       // console.log(f_answer);
-      if(f_answer%2==0)  addVideoStream(video, userVideoStream, peers[call.peer].name,call.peer);
+      if(f_answer%2==0)   addVideoStream(video, userVideoStream, peers[call.peer].name,call.peer);
       });
       call.on('close', () => {
       delete peers[call.peer];
@@ -64,6 +66,7 @@ navigator.mediaDevices
   });
 
     socket.on("user-connected", (userId, userName) => {
+      console.log("user connected", userName);
       connectToNewUser(userId, stream, userName);
     });
   });
@@ -83,9 +86,8 @@ const connectToNewUser = (userId, stream, userName) => {
   call.on("stream", (userVideoStream) => {
     console.log("user called");
     f_call+=1;
-    if(f_call%2==0){ 
+    if(f_call%2==0) addVideoStream(video, userVideoStream,userName,call.peer);
 
-      addVideoStream(video, userVideoStream,userName,call.peer);}
   });
   call.on('close', () => {
       // video.remove();
@@ -105,16 +107,22 @@ socket.on('user-disconnected', (peerId,name) => {
 peer.on("open", (id) => {
   console.log("room joined!!!")
   socket.emit("join-room", ROOM_ID, id, user);
+  console.log('yes');
   peers[id]={'call':peer,'name':user};
 });
 
-socket.on("createMessage", (message, userName) => {
+let messages = document.querySelector(".messages");
+
+
+socket.on("createMessage", (message, userName, time) => {
+  console.log('message showed');
   messages.innerHTML =
     messages.innerHTML +
     `<div class="message">
-        <b><span> ${
-          userName === user ? "me" : userName
-        }</span> </b>
+        <b>${
+          userName
+        } </b>
+        <b class="time-in-message">${time}</b>
         <span>${message}</span>
     </div>`;
 });

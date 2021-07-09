@@ -75,13 +75,14 @@ showChat.addEventListener("click", () => {
 
 //for coping invitation link
 inviteButton.addEventListener("click", (e) => {
-   var inviteLink = document.body.appendChild(document.createElement("input"));
-   inviteLink.value = window.location.href;
-  inviteLink.focus();
-  inviteLink.select();
-  document.execCommand('copy');
-  inviteLink.parentNode.removeChild(inviteLink);
-  alert('invite link is copied!');
+  //  var inviteLink = document.body.appendChild(document.createElement("input"));
+  //  inviteLink.value = window.location.href;
+  // inviteLink.focus();
+  // inviteLink.select();
+  // document.execCommand('copy');
+  // inviteLink.parentNode.removeChild(inviteLink);
+  // alert('invite link is copied!');
+  window.location.replace(`/chat/${ROOM_ID}`);
 
 });
 
@@ -151,13 +152,12 @@ const userLeft = (peerId) =>{
 
 let text = document.querySelector("#chat_message");
 let send = document.getElementById("send");
-let messages = document.querySelector(".messages");
 
 
 //sending message to the room
 send.addEventListener("click", (e) => {
   if (text.value.length !== 0) {
-    socket.emit("message", text.value);
+    socket.emit("message", text.value, document.querySelector('#timer').innerHTML);
     text.value = "";
   }
 });
@@ -165,7 +165,7 @@ send.addEventListener("click", (e) => {
 //enabling enter key for sending the message
 text.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && text.value.length !== 0) {
-    socket.emit("message", text.value);
+    socket.emit("message", text.value, document.querySelector('#timer').innerHTML);
     text.value = "";
   }
 });
