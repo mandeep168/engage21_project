@@ -22,10 +22,12 @@ socket.on("createMessage", (message, userName,time) => {
   messages.innerHTML =
     messages.innerHTML +
     `<div class="message">
+      <div class="msg">
         <b>${
           userName
         } </b>
          <b class="time-in-message">${time}</b>
+         </div>
         <span>${message}</span>
     </div>`;
 });
@@ -56,6 +58,16 @@ joinMeet.addEventListener("click", (e) => {
    window.location.href = '/engage';
 });
 
+
+//leave-chat
+let chatLeave = document.querySelector('#leave-chat');
+
+chatLeave.addEventListener("click", (e) => {
+   let leaveChat = confirm("Do you want to leave this chat?");
+ if(leaveChat){
+  window.location.href = '/';
+ }
+});
 
 //timer
 function time(){

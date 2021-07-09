@@ -71,8 +71,9 @@
           <div class="messages">
               <% msgs.forEach(function(msgs) { %>
                <div class="message">
+                <div class="msg">
                   <b><%= msgs.name %></b>
-                  <b class="time-in-message"><%= msgs.created %></b>
+                  <b class="time-in-message"><%= msgs.created %></b></div>
                   <span> <%= msgs.msg %>
                 </span></div>
               <% }); %>

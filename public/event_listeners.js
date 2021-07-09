@@ -115,7 +115,7 @@ document.addEventListener('mouseup', function(e) {
 endCall.addEventListener('click', (e) => {
  let endcall = confirm("Do you want to leave this call?");
  if(endcall){
-  window.location.href = '/';
+  window.location.href = `/chat/${ROOM_ID}`;
  }
 });
 

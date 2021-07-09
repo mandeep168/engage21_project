@@ -12,34 +12,11 @@
   height:  80vh;
 }
 #timer{
-    /*position: fixed;*/
-    display: inline;
-    /*align-items: right;*/
-    color: #fff;
-    border: 1px white solid;
-    padding: 6px;
-    padding-left: 27px;
-    padding-right: 27px;
-    border-radius: 33px 36px 32px;
     font-size: 1rem;
-    background-color: #546e7a;
-    /* margin-left: auto; */
-    /* margin-right: 0px; */
-
 }
 
 #meet-join{
-  /*position: fixed;*/
-  display: inline;
-  color: #fff;
-    border: 1px white solid;
-    padding: 6px;
-    padding-left: 27px;
-    padding-right: 27px;
-    border-radius: 33px 36px 32px;
-    background-color: #546e7a;
-    /* margin-left: auto; */
-    /* margin-right: 0px; */
+    cursor: pointer;
 }
 
 #nav-bar{
@@ -47,4 +24,19 @@
   top: 3%;
   right: 1%;
   padding: 4px;
+}
+
+#leave-chat{
+      cursor: pointer;
+}
+
+.nav-option{
+    display: inline;
+    color: #fff;
+    border: 1px white solid;
+    padding: 6px;
+    padding-left: 27px;
+    padding-right: 27px;
+    border-radius: 33px 36px 32px;
+    background-color: #546e7a;
 }

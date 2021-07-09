@@ -111,7 +111,7 @@ li{
 
 
 .time-in-message{
-    font-size: smaller;
+    font-size: 0.6rem;
     font-weight: lighter;
     /*width: 88px;*/
 }
@@ -191,11 +191,12 @@ li{
   flex-direction: column;
 }
 
-.message > b {
+.msg > b {
   color: #fff;
-  display: flex;
-  align-items: center;
+  /*display: flex;
+  align-items: center;*/
   text-transform: capitalize;
+  padding-right: 4px;
 }
 
 .message > b > i {

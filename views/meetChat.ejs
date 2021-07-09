@@ -20,8 +20,9 @@
 
 	 <div class="main__right">
     <div id="nav-bar">
-        <div id="meet-join">Join the meeting</div>
-       <div id="timer"> </div>
+        <div id="meet-join" class="nav-option">Join the meeting</div>
+        <div id="leave-chat" class="nav-option">Leave Chat</div>
+       <div id="timer" class="nav-option"> </div>
     </div>
       <div class="main__chat_window">
           <div class="messages">
@@ -29,8 +30,9 @@
    
       <% msgs.forEach(function(msgs) { %>
        <div class="message">
+        <div class="msg">
           <b><%= msgs.name %></b>
-          <b class="time-in-message"><%= msgs.created %></b>
+          <b class="time-in-message"><%= msgs.created %></b></div>
           <span> <%= msgs.msg %>
         </span></div>
       <% }); %>

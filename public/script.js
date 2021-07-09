@@ -119,10 +119,11 @@ socket.on("createMessage", (message, userName, time) => {
   messages.innerHTML =
     messages.innerHTML +
     `<div class="message">
+      <div class="msg">
         <b>${
           userName
         } </b>
-        <b class="time-in-message">${time}</b>
+        <b class="time-in-message">${time}</b></div>
         <span>${message}</span>
     </div>`;
 });
