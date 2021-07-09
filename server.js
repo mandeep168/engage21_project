@@ -19,7 +19,6 @@ const io = require("socket.io")(server, {
 
 const MONGOURI = 
 "mongodb+srv://mandeep:IMlqesbPNlRXD7cd@cluster0.vmtk4.mongodb.net/chat?retryWrites=true&w=majority";
-// //mongodb+srv://mandeep:<password>@cluster0.vmtk4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 // mongodb://localhost/chat
 mongoose.connect(MONGOURI, (err) => {
@@ -30,12 +29,8 @@ mongoose.connect(MONGOURI, (err) => {
   }
 });
 
- // mongoose.connect(MONGOURI);
- //  // .then(() => console.log("MongoDB connected"))
- //  // .catch((err) => console.log(err));
 
-
-//document 
+//document structure
 const chatSchema = new mongoose.Schema({
   name: String,
   msg: String,
@@ -43,18 +38,18 @@ const chatSchema = new mongoose.Schema({
 });
 
 
-
-// app.use("/peerjs", peerServer);
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
+
+//render homepage
 app.get("/", (req, res) => {
-  
-    res.render("homePage");
+   res.render("homePage");
 });
 
   let id;
   let Chat;
+
 
 app.get('/chat', (req, res) => {
     id=uuidv4();
@@ -64,97 +59,68 @@ app.get('/chat', (req, res) => {
    let Result;
 
 app.get('/chat/:room', (req, res) => {
-  id=req.params.room;
-  // id='defaa0dd-bf58-4f5a-983c-777a9591595bs';
+    id=req.params.room;
 
     Chat = mongoose.model(id, chatSchema);
   
- 
    Chat.find({}, (err, result) => {
     if(err) return handleError(err);
     else{
-     // console.log(result);
-      // console.log(result.length);
-      Result=result;
-      console.log(Result);
-      // let i=0;
-      // while(i<result.length){
-      //   console.log(result[i].name, result[i].msg);
-      //   i+=1;
-      // }
        res.render("meetChat", { msgs: result, roomId: id});
-
     }
    });
 
    
 });
 
-app.get("/engage", (req, res) => {
-  
-  console.log("good to go");
 
-  res.redirect(`engage/${id}`);
-});
-
-
+// rendering video call page with sending the required collection's documents as array
 app.get("/engage/:room", (req, res) => {
   id = req.params.room;
-      Chat = mongoose.model(id, chatSchema);
+
+  //if that collection is not yet created 
+  Chat = mongoose.model(id, chatSchema);
   Chat.find({}, (err, result) => {
     if(err) return handleError(err);
     else{
-     // console.log(result);
-      // console.log(result.length);
-      // Result=result;
-      console.log(result);
-      // let i=0;
-      // while(i<result.length){
-      //   console.log(result[i].name, result[i].msg);
-      //   i+=1;
-      // }
        res.render("dashboard", { msgs: result, roomId: id});
-
     }
    });
-
-   // res.render("dashboard", { msgs : Result, roomId: req.params.room });
 });
 
 
 io.on("connection", (socket) => {
-  socket.on("join", (roomId, userId, userName) => {
-    console.log("joined");
+  socket.on("join-chat", (roomId, userId, userName) => {
      socket.join(roomId);
 
-
-
-   socket.on("chat", (message, time) => {
-      let newMsg = new Chat({name:userName, msg: message, created: time});
-      newMsg.save((err)=>{
-        if(err) throw err;
-        io.to(roomId).emit("createMessage", message, userName, time);
+     socket.on("chat", (message, time) => {
+        let newMsg = new Chat({name:userName, msg: message, created: time});
+        newMsg.save((err)=>{
+          if(err) throw err;
+          io.to(roomId).emit("createMessage", message, userName, time);
+        });
+        
       });
-      
-    });
    });
-  socket.on("join-room", (roomId, userId, userName) => {
-    console.log("please");
-    socket.join(roomId);
-    socket.to(roomId).emit("user-connected", userId,userName);
-    socket.on("message", (message, time) => {
-      let newMsg = new Chat({name:userName, msg: message, created: time});
-      newMsg.save((err)=>{
-        if(err) throw err;
-        io.to(roomId).emit("createMessage", message, userName, time);
+
+  socket.on("join-video-call", (roomId, userId, userName) => {
+      socket.join(roomId);
+
+      socket.to(roomId).emit("user-connected", userId,userName);
+      socket.on("message", (message, time) => {
+        let newMsg = new Chat({name:userName, msg: message, created: time});
+        newMsg.save((err)=>{
+          if(err) throw err;
+          io.to(roomId).emit("createMessage", message, userName, time);
+        });
+        
       });
-      
-    });
-    socket.on('disconnect', () => {
-      socket.to(roomId).emit('user-disconnected', userId, userName);
-    })
+      socket.on('disconnect', () => {
+        socket.to(roomId).emit('user-disconnected', userId, userName);
+      })
   });
 
 });
+
 
 server.listen(process.env.PORT || 5001);

@@ -1,6 +1,6 @@
 const socket = io("/");
 
-var user = prompt("Enter your name");
+let user = prompt("Enter your name");
 while(user === '' || user === null){
   user = prompt("Enter your name again");
 }
@@ -9,7 +9,7 @@ var peer = new Peer();
 
 peer.on("open", (id) => {
   console.log("room joined!!!")
-  socket.emit("join", ROOM_ID, id, user);
+  socket.emit("join-chat", ROOM_ID, id, user);
  // peers[id]={'call':peer,'name':user};
 });
 
@@ -55,7 +55,7 @@ text.addEventListener("keydown", (e) => {
 let joinMeet = document.querySelector('#meet-join');
 
 joinMeet.addEventListener("click", (e) => {
-   window.location.href = '/engage';
+   window.location.href = `/engage/${ROOM_ID}`;
 });
 
 

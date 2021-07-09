@@ -13,7 +13,8 @@ while(user === '' || user === null){
   user = prompt("Enter your name again");
 }
 
-// console.log(peer);
+
+console.log(user);
 //1
  let peer = new Peer();
 
@@ -106,7 +107,7 @@ socket.on('user-disconnected', (peerId,name) => {
 //2
 peer.on("open", (id) => {
   console.log("room joined!!!")
-  socket.emit("join-room", ROOM_ID, id, user);
+  socket.emit("join-video-call", ROOM_ID, id, user);
   console.log('yes');
   peers[id]={'call':peer,'name':user};
 });
