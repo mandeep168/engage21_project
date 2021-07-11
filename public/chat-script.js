@@ -1,10 +1,17 @@
 const socket = io("/");
 
-let user = prompt("Enter your name");
-while(user === '' || user === null){
-  user = prompt("Enter your name again");
+// sessionStorage.setItem("name", "gagandeep kaur");
+let user;
+if(sessionStorage.getItem("user")){
+  user = sessionStorage.getItem("user")
 }
-
+else{
+  user = prompt("Enter your name");
+  while(user === '' || user === null){
+    user = prompt("Enter your name again");
+  }
+  sessionStorage.setItem("user", user);
+}
 var peer = new Peer();
 
 peer.on("open", (id) => {
@@ -51,11 +58,11 @@ text.addEventListener("keydown", (e) => {
     text.value = "";
   }
 });
-
 let joinMeet = document.querySelector('#meet-join');
 
 joinMeet.addEventListener("click", (e) => {
    window.location.href = `/engage/${ROOM_ID}`;
+   chatPage=1;
 });
 
 
@@ -65,6 +72,7 @@ let chatLeave = document.querySelector('#leave-chat');
 chatLeave.addEventListener("click", (e) => {
    let leaveChat = confirm("Do you want to leave this chat?");
  if(leaveChat){
+  sessionStorage.clear();
   window.location.href = '/';
  }
 });

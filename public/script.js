@@ -1,16 +1,18 @@
 const socket = io("/");
 
 
- // socket.emit("join-room");
-
 const myVideo = document.createElement("video");
+
 
 
 myVideo.muted = true;
 
-let user = prompt("Enter your name");
-while(user === '' || user === null){
-  user = prompt("Enter your name again");
+let user;
+if(sessionStorage.getItem("user")) {
+ user = sessionStorage.getItem("user");
+}else{
+
+  window.location.href=`/chat/${ROOM_ID}`;
 }
 
 
@@ -91,8 +93,6 @@ const connectToNewUser = (userId, stream, userName) => {
 
   });
   call.on('close', () => {
-      // video.remove();
-     // userLeft(userId);
       delete peers[userId];
   })},3000);
 };
@@ -136,3 +136,26 @@ socket.on("createMessage", (message, userName, time) => {
 
 
 
+
+const inviteButton = document.querySelector("#inviteButton");
+inviteButton.addEventListener("click", (e)=>{
+  let mystream = navigator.mediaDevices.getUserMedia({audio:true,video:true});
+  let video=document.createElement("video");
+ //  addVideoStream(video, myVideoStream, user,"screen");
+  f_answer =0 ;
+    peer.on("call", (call) => {
+      call.answer(stream);
+     // peers[call.peer] = {'call':call};
+      const video = document.createElement("video");
+      call.on("stream", (userVideoStream) => {
+        console.log("ansewered")
+        f_answer+=1;
+      if(f_answer%2==0)   addVideoStream(video, myVideoStream, user,"screen");
+      });
+    });
+
+    // socket.on("user-connected", (userId, user) => {
+    //   console.log("user connected", userName);
+    //   connectToNewUser(userId, stream, userName);
+    // });
+});

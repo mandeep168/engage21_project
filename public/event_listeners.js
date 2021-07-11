@@ -1,4 +1,13 @@
+
 const videoGrid = document.getElementById("video-grid");
+// const inviteButton = document.querySelector("#inviteButton");
+const muteButton = document.querySelector("#muteButton");
+const stopVideo = document.querySelector("#stopVideo");
+const participants = document.getElementById('participants');
+const endCall = document.querySelector("#endCall");
+const showChat = document.querySelector("#showChat");
+const text = document.querySelector("#chat_message");
+const send = document.getElementById("send");
 
 //timer
 function time(){
@@ -17,12 +26,7 @@ function checkTime(i) {
   return i;
 }
 
-const inviteButton = document.querySelector("#inviteButton");
-const muteButton = document.querySelector("#muteButton");
-const stopVideo = document.querySelector("#stopVideo");
-const participants = document.getElementById('participants');
-const endCall = document.querySelector("#endCall");
-const showChat = document.querySelector("#showChat");
+
 
 //for voice button
 muteButton.addEventListener("click", () => {
@@ -74,17 +78,17 @@ showChat.addEventListener("click", () => {
 
 
 //for coping invitation link
-inviteButton.addEventListener("click", (e) => {
-  //  var inviteLink = document.body.appendChild(document.createElement("input"));
-  //  inviteLink.value = window.location.href;
-  // inviteLink.focus();
-  // inviteLink.select();
-  // document.execCommand('copy');
-  // inviteLink.parentNode.removeChild(inviteLink);
-  // alert('invite link is copied!');
-  window.location.replace(`/chat/${ROOM_ID}`);
+// inviteButton.addEventListener("click", (e) => {
+//   //  var inviteLink = document.body.appendChild(document.createElement("input"));
+//   //  inviteLink.value = window.location.href;
+//   // inviteLink.focus();
+//   // inviteLink.select();
+//   // document.execCommand('copy');
+//   // inviteLink.parentNode.removeChild(inviteLink);
+//   // alert('invite link is copied!');
 
-});
+
+// });
 
 
 
@@ -150,8 +154,6 @@ const userLeft = (peerId) =>{
 
 
 
-let text = document.querySelector("#chat_message");
-let send = document.getElementById("send");
 
 
 //sending message to the room

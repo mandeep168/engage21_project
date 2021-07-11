@@ -219,18 +219,13 @@ li{
   flex-wrap: wrap;
 }
 
-/*#showChat {
-  display: none;
-}*/
 
-/*.header__back {
-  display: none;
-  position: absolute;
-  font-size: 1.3rem;
-  top: 17px;
-  left: 28px;
-  color: #fff;
-}*/
+
+@media (max-width: 600px)
+video {
+    height: 100px;
+    width: 120px;
+}
 
 @media (max-width: 700px) {
   .main__right {
@@ -242,7 +237,7 @@ li{
   }
 
   video {
-    height: auto;
+    height: 189px;
     width: auto;
   }
 
