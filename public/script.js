@@ -59,7 +59,12 @@ navigator.mediaDevices
   });
 
     socket.on("user-connected", (userId, userName) => {
-      console.log("user connected", userName);
+     document.querySelector('#notify').innerHTML = `${userName} joined`;
+     document.querySelector('#notify').style.zIndex = '5000';
+     setTimeout(()=>{
+      document.querySelector('#notify').style.zIndex = -1;
+      },3000);
+
       connectToNewUser(userId, stream, userName);
     });
   });
@@ -84,11 +89,15 @@ const connectToNewUser = (userId, stream, userName) => {
   });
   call.on('close', () => {
       delete peers[userId];
-  })},3000);
+  })},1000);
 };
 
 socket.on('user-disconnected', (peerId,name) => {
-  console.log("user disconnected", name);
+  document.querySelector('#notify').innerHTML = `${name} left`;
+     document.querySelector('#notify').style.zIndex = '5000';
+     setTimeout(()=>{
+      document.querySelector('#notify').style.zIndex = -1;
+      },3000);
   userLeft(peerId);
   if (peers[peerId].call) peers[peerId].call.close()
   delete peers[peerId];
@@ -132,5 +141,36 @@ socket.on("notify", ( userName) => {
   document.querySelector('#notify').innerHTML = `new message from ${userName}`;
   document.querySelector('#notify').style.zIndex = '5000';
   setTimeout(()=>{document.querySelector('#notify').style.zIndex = -1;},3000)
+
+});
+
+const handRaise = document.querySelector('#raiseHand');
+
+handRaise.addEventListener("click", (e)=>{
+      //color: yellow;
+  if(handRaise.style.color === 'yellow')  { 
+   handRaise.style.color = 'white';
+   handRaise.title='raise hand';
+ }
+  else{
+   handRaise.style.color = 'yellow';
+   handRaise.title='lower hand';
+  }
+  socket.emit('raise-hand');
+})
+
+// let raised_hand;
+socket.on('user-raised-hand', (userId, userName) =>{
+ let hand =  document.getElementById(userId);
+ let raise = hand.querySelector('i');
+
+if(hand.style.borderColor==='yellow') {
+  hand.style.border = 'none';
+  raise.style.zIndex = '-1';
+}
+ else {
+  hand.style.border = "2px solid yellow";
+  raise.style.zIndex = '1';
+}
 
 });

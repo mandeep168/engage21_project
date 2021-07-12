@@ -120,6 +120,9 @@ io.on("connection", (socket) => {
       socket.on('disconnect', () => {
         socket.to(roomId).emit('user-disconnected', userId, userName);
       })
+      socket.on('raise-hand', ()=>{
+        socket.to(roomId).emit('user-raised-hand', userId, userName);
+      })
   });
 
 });

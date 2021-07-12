@@ -138,13 +138,20 @@ const addVideoStream = (video, stream, userName,peerId) => {
     let container = document.createElement('div');
     container.classList.add("container");
     container.setAttribute('id', peerId);
-    let name = document.createElement('div');
-    name.classList.add("overlayText");
+   let name = document.createElement('div');
+   name.classList.add("overlayText");
     let p = document.createElement('p');
     p.setAttribute('id', 'topText');
     p.innerHTML = userName;
-    name.append(p);
+   name.append(p);
+    
+    let i = document.createElement('i');
+   // <i class="fas fa-hand-paper"></i>
+    i.classList.add("fas");
+    i.classList.add("fa-hand-paper");
+    i.classList.add("hand");
     container.append(video);
+    container.append(i);
     container.append(name);
     videoGrid.append(container);
 
