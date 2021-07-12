@@ -8,8 +8,10 @@ const endCall = document.querySelector("#endCall");
 const showChat = document.querySelector("#showChat");
 const text = document.querySelector("#chat_message");
 const send = document.getElementById("send");
+const handRaise = document.querySelector('#raiseHand');
 
-//timer
+
+//function to display time in the meet
 function time(){
   const today = new Date();
   let h = today.getHours();
@@ -21,14 +23,16 @@ function time(){
   setTimeout(time,1000);
 }
 
+
+// function to add zeros in front to single digit numbers
 function checkTime(i) {
-  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  if (i < 10) {i = "0" + i}; 
   return i;
 }
 
 
 
-//for voice button
+//event listener for mute button
 muteButton.addEventListener("click", () => {
   const enabled = myVideoStream.getAudioTracks()[0].enabled;
   if (enabled) {
@@ -44,9 +48,10 @@ muteButton.addEventListener("click", () => {
   }
 });
 
-//for video button
+
+//event listener for video buttton
 stopVideo.addEventListener("click", () => {
-  const enabled = myVideoStream.getVideoTracks()[0].enabled;
+  let enabled = myVideoStream.getVideoTracks()[0].enabled;
   if (enabled) {
     myVideoStream.getVideoTracks()[0].enabled = false;
 
@@ -62,7 +67,8 @@ stopVideo.addEventListener("click", () => {
   }
 });
 
-//for showing chats
+
+//event listener for chat button
 showChat.addEventListener("click", () => {
   let chatDisplay = document.querySelector(".main__right").style.display;
 
@@ -79,7 +85,7 @@ showChat.addEventListener("click", () => {
 });
 
 
-//for coping invitation link
+//event listener for the invite button
 inviteButton.addEventListener("click", (e) => {
    var inviteLink = document.body.appendChild(document.createElement("input"));
    inviteLink.value = window.location.href;
@@ -120,6 +126,27 @@ document.addEventListener('mouseup', function(e) {
 });
 
 
+//add 2 event listeners for raising and lowering hands
+
+//Event listener for raising hand
+handRaise.addEventListener("click", (e)=>{  
+  let hand_cont = document.getElementById('0');
+  let hand_icon = hand_cont.querySelector('i');
+  if(handRaise.style.color === 'yellow')  { 
+   handRaise.style.color = 'white';
+   handRaise.title='raise hand';
+   hand_icon.style.zIndex = '-1';
+  }
+  else{
+   handRaise.style.color = 'yellow';
+   handRaise.title='lower hand';
+   hand_icon.style.zIndex = '1';
+
+  }
+  socket.emit('raise-hand');
+  
+});
+
 //for end call button
 endCall.addEventListener('click', (e) => {
  let endcall = confirm("Do you want to leave this call?");
@@ -130,7 +157,6 @@ endCall.addEventListener('click', (e) => {
 
 //adding user video to the room
 const addVideoStream = (video, stream, userName,peerId) => {
-  // console.log(userName);
   video.srcObject = stream;
   video.addEventListener("loadedmetadata", () => {
     video.play();
@@ -138,15 +164,14 @@ const addVideoStream = (video, stream, userName,peerId) => {
     let container = document.createElement('div');
     container.classList.add("container");
     container.setAttribute('id', peerId);
-   let name = document.createElement('div');
-   name.classList.add("overlayText");
+    let name = document.createElement('div');
+    name.classList.add("overlayText");
     let p = document.createElement('p');
     p.setAttribute('id', 'topText');
     p.innerHTML = userName;
-   name.append(p);
+     name.append(p);
     
     let i = document.createElement('i');
-   // <i class="fas fa-hand-paper"></i>
     i.classList.add("fas");
     i.classList.add("fa-hand-paper");
     i.classList.add("hand");
@@ -175,6 +200,7 @@ send.addEventListener("click", (e) => {
     text.value = "";
   }
 });
+
 
 //enabling enter key for sending the message
 text.addEventListener("keydown", (e) => {

@@ -121,7 +121,7 @@ io.on("connection", (socket) => {
         socket.to(roomId).emit('user-disconnected', userId, userName);
       })
       socket.on('raise-hand', ()=>{
-        socket.to(roomId).emit('user-raised-hand', userId, userName);
+        io.to(roomId).emit('user-raised-hand', userId, userName);
       })
   });
 

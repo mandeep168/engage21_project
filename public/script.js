@@ -1,29 +1,22 @@
 const socket = io("/");
 
-
 const myVideo = document.createElement("video");
-
-
 
 myVideo.muted = true;
 
 let user;
 if(sessionStorage.getItem("user")) {
- user = sessionStorage.getItem("user");
+  user = sessionStorage.getItem("user");
 }else{
-
   window.location.href=`/chat/${ROOM_ID}`;
 }
 
 
-console.log(user);
-//1
  let peer = new Peer();
 
 let peers = {}
 let myVideoStream;
-
-// let stream = navigator.mediaDevices.getUserMedia({audio:true,video:true});
+// const mypeerId = peer.id;
 
 navigator.mediaDevices
   .getUserMedia({
@@ -32,7 +25,6 @@ navigator.mediaDevices
   })
   .then((stream) => {
     myVideoStream = stream;
-    console.log("My video added!!!")
     addVideoStream(myVideo, stream,user,0);
     peer.on('connection', (conn) => {
       conn.on('open', ()=>{
@@ -78,11 +70,7 @@ const connectToNewUser = (userId, stream, userName) => {
   peers[call.peer] = {'call':call,'name':userName};
   const video = document.createElement("video");
   let f_call=0;
-  // let join_permission = confirm("Let ${userName} join?");
-
-  // if(join_permission) 
   call.on("stream", (userVideoStream) => {
-    console.log("user called");
     f_call+=1;
     if(f_call%2==0) addVideoStream(video, userVideoStream,userName,call.peer);
 
@@ -105,9 +93,7 @@ socket.on('user-disconnected', (peerId,name) => {
 
 //2
 peer.on("open", (id) => {
-  console.log("room joined!!!")
   socket.emit("join-video-call", ROOM_ID, id, user);
-  console.log('yes');
   peers[id]={'call':peer,'name':user};
 });
 
@@ -115,9 +101,6 @@ let messages = document.querySelector(".messages");
 
 
 socket.on("createMessage", (message, userName, time) => {
-  // console.log('message showed');
-
-
   messages.innerHTML =
     messages.innerHTML +
     `<div class="message">
@@ -144,33 +127,24 @@ socket.on("notify", ( userName) => {
 
 });
 
-const handRaise = document.querySelector('#raiseHand');
 
-handRaise.addEventListener("click", (e)=>{
-      //color: yellow;
-  if(handRaise.style.color === 'yellow')  { 
-   handRaise.style.color = 'white';
-   handRaise.title='raise hand';
- }
-  else{
-   handRaise.style.color = 'yellow';
-   handRaise.title='lower hand';
-  }
-  socket.emit('raise-hand');
-})
 
-// let raised_hand;
+
+//socket call back going to other participants 
 socket.on('user-raised-hand', (userId, userName) =>{
- let hand =  document.getElementById(userId);
- let raise = hand.querySelector('i');
+  console.log("raised hand someone")
+  if(userId!==peer.id){
+    console.log(userName);
+   let hand =  document.getElementById(userId);
+   let raise = hand.querySelector('i');
 
-if(hand.style.borderColor==='yellow') {
-  hand.style.border = 'none';
-  raise.style.zIndex = '-1';
-}
- else {
-  hand.style.border = "2px solid yellow";
-  raise.style.zIndex = '1';
-}
-
+    if(hand.style.borderColor==='yellow') {
+      hand.style.border = 'none';
+      raise.style.zIndex = '-1';
+    }
+    else{
+      hand.style.border = "2px solid yellow";
+      raise.style.zIndex = '1';
+    }
+  }
 });
