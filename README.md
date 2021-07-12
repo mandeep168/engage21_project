@@ -1,3 +1,10 @@
 # engage21_project
 
-site is live at https://engage21-clone-project.herokuapp.com/
+Site is live at https://engage21-clone-project.herokuapp.com/
+
+## Technologies used
+
+
+
+## Steps to run the project locally
+
