@@ -9,6 +9,6 @@ Site is live at https://engage21-clone-project.herokuapp.com/
 ## Steps to run the project locally
 
 Clone the project in a folder<br>
-Open terminal and run <i>npm install </i><br>
+Open terminal and run <b><i>npm install </i></b><br>
 
-run the command nodemon server.js and open localhost:5001
+run the command <b><i>nodemon server.js</i></b> and <b><i>open localhost:5001</i></b>
