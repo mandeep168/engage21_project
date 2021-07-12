@@ -98,6 +98,7 @@ io.on("connection", (socket) => {
         newMsg.save((err)=>{
           if(err) throw err;
           io.to(roomId).emit("createMessage", message, userName, time);
+          socket.to(roomId).emit("notify",userName);
         });
         
       });
@@ -112,6 +113,7 @@ io.on("connection", (socket) => {
         newMsg.save((err)=>{
           if(err) throw err;
           io.to(roomId).emit("createMessage", message, userName, time);
+          socket.to(roomId).emit("notify",userName);
         });
         
       });
