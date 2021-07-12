@@ -1,6 +1,6 @@
 
 const videoGrid = document.getElementById("video-grid");
-// const inviteButton = document.querySelector("#inviteButton");
+const inviteButton = document.querySelector("#inviteButton");
 const muteButton = document.querySelector("#muteButton");
 const stopVideo = document.querySelector("#stopVideo");
 const participants = document.getElementById('participants');
@@ -69,26 +69,28 @@ showChat.addEventListener("click", () => {
   if(chatDisplay==="flex" ){
       document.querySelector(".main__right").style.display = "none";
        document.querySelector(".main__left").style.flex = "1";
+        document.querySelector("#chat-dot").style.zIndex = '-1';
   }else{
       document.querySelector(".main__right").style.display = "flex";
       document.querySelector(".main__right").style.flex = "0.3";
-       document.querySelector(".main__left").style.flex = "0.7";
+      document.querySelector(".main__left").style.flex = "0.7";
+      document.querySelector("#chat-dot").style.zIndex = '-1';
   }
 });
 
 
 //for coping invitation link
-// inviteButton.addEventListener("click", (e) => {
-//   //  var inviteLink = document.body.appendChild(document.createElement("input"));
-//   //  inviteLink.value = window.location.href;
-//   // inviteLink.focus();
-//   // inviteLink.select();
-//   // document.execCommand('copy');
-//   // inviteLink.parentNode.removeChild(inviteLink);
-//   // alert('invite link is copied!');
+inviteButton.addEventListener("click", (e) => {
+   var inviteLink = document.body.appendChild(document.createElement("input"));
+   inviteLink.value = window.location.href;
+  inviteLink.focus();
+  inviteLink.select();
+  document.execCommand('copy');
+  inviteLink.parentNode.removeChild(inviteLink);
+  alert('invite link has been copied!');
 
 
-// });
+});
 
 
 
@@ -101,9 +103,12 @@ participants.addEventListener("click", (e) => {
      list.appendChild(entry);
   }
   let index = document.getElementById("users-list").style.zIndex;
- if(index === '-1')  {
-  document.getElementById("users-list").style.zIndex = '5000';
- }
+   if(index === '-1')  {
+    document.getElementById("users-list").style.zIndex = '5000';
+   }
+   // else {
+   //  document.getElementById("users-list").style.zIndex = '-1';
+   // }
 });
 
 //clicking ouside the participants box we can make it disapear
