@@ -3,6 +3,10 @@
 Site is live at https://engage21-clone-project.herokuapp.com/
 
 ## Technologies used
+socket.io<br>
+webRTC<br>
+peerjs<br>
+Nodejs<br>
 
 
 
