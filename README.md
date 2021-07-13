@@ -20,6 +20,18 @@ Nodejs is used for creating backend APIs
 For writing the logic in backend
 <br>
 
+<b>ejs</b><br>
+for injecting data into the HTML template at the client-side like roomID and produce the final HTML.
+<br>
+
+<b>Javascript</b><br>
+For making the web pages interactive, by event listeners 
+<br>
+
+<b>CSS</b><br>
+for styling the application
+<br>
+
 <b>uuid</b><br>
 For generating dynamic room ids
 <br>
