@@ -30,7 +30,6 @@ navigator.mediaDevices
     peer.on('connection', (conn) => {
       conn.on('open', ()=>{
         conn.on('data', (data)=>{
-          console.log(data);
           if(data!=='-1') peers[conn.peer] = {'call':conn,'name':data};
           else {
              window.location.href=`/chat/${ROOM_ID}`;
@@ -42,10 +41,8 @@ navigator.mediaDevices
     let f_answer =0 ;
     peer.on("call", (call) => {
       call.answer(stream);
-     // peers[call.peer] = {'call':call};
       const video = document.createElement("video");
       call.on("stream", (userVideoStream) => {
-        console.log("ansewered")
         f_answer+=1;
       if(f_answer%2==0)   addVideoStream(video, userVideoStream, peers[call.peer].name,call.peer);
       });
@@ -67,10 +64,9 @@ navigator.mediaDevices
   });
 
 const connectToNewUser = (userId, stream, userName, socketId) => {
+   const conn = peer.connect(userId);
    if(Object.keys(peers).length < 3){
-      const conn = peer.connect(userId);
-
-        //data connection for sending the name of calling user to the called user
+      //data connection for sending the name of calling user to the called user
         conn.on('open', ()=>{
           conn.send(user);
         });
@@ -90,13 +86,10 @@ const connectToNewUser = (userId, stream, userName, socketId) => {
     })}
     ,500);
   }else{
-    //socket.emit('limit_reached', socketId);
-    const conn = peer.connect(userId);
-
-        //data connection for sending the name of calling user to the called user
-        conn.on('open', ()=>{
-          conn.send('-1');
-        });
+   //data connection for sending the name of calling user to the called user
+    conn.on('open', ()=>{
+      conn.send('-1');
+    });
        
   }
   
@@ -155,7 +148,6 @@ socket.on("notify", ( userName) => {
 //socket call back going to other participants 
 socket.on('user-raised-hand', (userId, userName) =>{
   if(userId!==peer.id){
-    console.log(userName);
    let hand =  document.getElementById(userId);
    let raise = hand.querySelector('i');
 
@@ -168,7 +160,6 @@ socket.on('user-raised-hand', (userId, userName) =>{
 
 socket.on('user-lowered-hand', (userId, userName) =>{
   if(userId!==peer.id){
-    console.log(userName);
    let hand =  document.getElementById(userId);
    let raise = hand.querySelector('i');
 
@@ -177,6 +168,3 @@ socket.on('user-lowered-hand', (userId, userName) =>{
   }
 });
 
-socket.on('user-limit-reached', () => {
-  console.log('user limit reahced');
-});
