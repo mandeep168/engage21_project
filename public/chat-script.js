@@ -1,13 +1,12 @@
 const socket = io("/");
 
-// sessionStorage.setItem("name", "gagandeep kaur");
 let user;
 if(sessionStorage.getItem("user")){
   user = sessionStorage.getItem("user")
 }
 else{
   user = prompt("Enter your name");
-  while(user === '' || user === null){
+  while(user === '' || user === null || user === '-1'){
     user = prompt("Enter your name again");
   }
   sessionStorage.setItem("user", user);
@@ -15,9 +14,7 @@ else{
 var peer = new Peer();
 
 peer.on("open", (id) => {
-  console.log("room joined!!!")
   socket.emit("join-chat", ROOM_ID, id, user);
- // peers[id]={'call':peer,'name':user};
 });
 
 let text = document.querySelector("#chat_message");

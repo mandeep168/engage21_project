@@ -30,7 +30,10 @@ body{
   padding: 1rem;
   background-color: #040910;
 }
-
+#main{
+  color: #FFF;
+  background-color: #040910;
+}
 video {
   height: 189px;
     border-radius: 1rem;

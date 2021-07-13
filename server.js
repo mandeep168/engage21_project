@@ -13,14 +13,8 @@ const io = require("socket.io")(server, {
 });
 
 
-// mandeep
-// IMlqesbPNlRXD7cd
+const MONGOURI = "mongodb+srv://mandeep:IMlqesbPNlRXD7cd@cluster0.vmtk4.mongodb.net/chat?retryWrites=true&w=majority";
 
-
-const MONGOURI = 
-"mongodb+srv://mandeep:IMlqesbPNlRXD7cd@cluster0.vmtk4.mongodb.net/chat?retryWrites=true&w=majority";
-
-// mongodb://localhost/chat
 mongoose.connect(MONGOURI, (err) => {
   if(err){
     console.log("ERRor",err);
@@ -37,8 +31,10 @@ const chatSchema = new mongoose.Schema({
   created: String
 });
 
-
+//for javascript, images, css files, we have public folder
 app.use(express.static("public"));
+
+//for ejs files, we have views folder
 app.set("view engine", "ejs");
 
 
@@ -47,8 +43,8 @@ app.get("/", (req, res) => {
    res.render("homePage");
 });
 
-  let id;
-  let Chat;
+let id;
+let Chat;
 
 
 app.get('/chat', (req, res) => {
@@ -56,7 +52,7 @@ app.get('/chat', (req, res) => {
    res.redirect(`chat/${id}`);
 });
 
-   let Result;
+
 
 app.get('/chat/:room', (req, res) => {
     id=req.params.room;
@@ -69,8 +65,6 @@ app.get('/chat/:room', (req, res) => {
        res.render("meetChat", { msgs: result, roomId: id});
     }
    });
-
-   
 });
 
 
@@ -80,6 +74,7 @@ app.get("/engage/:room", (req, res) => {
 
   //if that collection is not yet created 
   Chat = mongoose.model(id, chatSchema);
+
   Chat.find({}, (err, result) => {
     if(err) return handleError(err);
     else{
@@ -115,14 +110,16 @@ io.on("connection", (socket) => {
           io.to(roomId).emit("createMessage", message, userName, time);
           socket.to(roomId).emit("notify",userName);
         });
-        
+       });
+      socket.on('raise-hand', ()=>{
+        io.to(roomId).emit('user-raised-hand', userId, userName);
+      });
+      socket.on('lower-hand', ()=>{
+        io.to(roomId).emit('user-lowered-hand', userId, userName);
       });
       socket.on('disconnect', () => {
         socket.to(roomId).emit('user-disconnected', userId, userName);
-      })
-      socket.on('raise-hand', ()=>{
-        io.to(roomId).emit('user-raised-hand', userId, userName);
-      })
+      });
   });
 
 });

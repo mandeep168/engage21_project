@@ -112,9 +112,6 @@ participants.addEventListener("click", (e) => {
    if(index === '-1')  {
     document.getElementById("users-list").style.zIndex = '5000';
    }
-   // else {
-   //  document.getElementById("users-list").style.zIndex = '-1';
-   // }
 });
 
 //clicking ouside the participants box we can make it disapear
@@ -126,9 +123,8 @@ document.addEventListener('mouseup', function(e) {
 });
 
 
-//add 2 event listeners for raising and lowering hands
 
-//Event listener for raising hand
+//Event listener for hand button
 handRaise.addEventListener("click", (e)=>{  
   let hand_cont = document.getElementById('0');
   let hand_icon = hand_cont.querySelector('i');
@@ -136,15 +132,14 @@ handRaise.addEventListener("click", (e)=>{
    handRaise.style.color = 'white';
    handRaise.title='raise hand';
    hand_icon.style.zIndex = '-1';
+   socket.emit('lower-hand');
   }
   else{
    handRaise.style.color = 'yellow';
    handRaise.title='lower hand';
    hand_icon.style.zIndex = '1';
-
-  }
-  socket.emit('raise-hand');
-  
+   socket.emit('raise-hand');
+  } 
 });
 
 //for end call button
@@ -154,6 +149,7 @@ endCall.addEventListener('click', (e) => {
   window.location.href = `/chat/${ROOM_ID}`;
  }
 });
+
 
 //adding user video to the room
 const addVideoStream = (video, stream, userName,peerId) => {

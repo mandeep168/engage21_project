@@ -16,7 +16,6 @@ if(sessionStorage.getItem("user")) {
 
 let peers = {}
 let myVideoStream;
-// const mypeerId = peer.id;
 
 navigator.mediaDevices
   .getUserMedia({
@@ -26,11 +25,17 @@ navigator.mediaDevices
   .then((stream) => {
     myVideoStream = stream;
     addVideoStream(myVideo, stream,user,0);
+
+    //data connection for recieving the name of the calling peer
     peer.on('connection', (conn) => {
       conn.on('open', ()=>{
         conn.on('data', (data)=>{
           console.log(data);
-           peers[conn.peer] = {'call':conn,'name':data};
+          if(data!=='-1') peers[conn.peer] = {'call':conn,'name':data};
+          else {
+             window.location.href=`/chat/${ROOM_ID}`;
+            alert("User limit is reached");
+          }
         });
       });
     });
@@ -57,27 +62,44 @@ navigator.mediaDevices
       document.querySelector('#notify').style.zIndex = -1;
       },3000);
 
-      connectToNewUser(userId, stream, userName);
+      connectToNewUser(userId, stream, userName, socket.id);
     });
   });
 
-const connectToNewUser = (userId, stream, userName) => {
-  const conn = peer.connect(userId);
-  conn.on('open', ()=>{
-    conn.send(user);
-  });
-  setTimeout(()=>{const call = peer.call(userId, stream);
-  peers[call.peer] = {'call':call,'name':userName};
-  const video = document.createElement("video");
-  let f_call=0;
-  call.on("stream", (userVideoStream) => {
-    f_call+=1;
-    if(f_call%2==0) addVideoStream(video, userVideoStream,userName,call.peer);
+const connectToNewUser = (userId, stream, userName, socketId) => {
+   if(Object.keys(peers).length < 3){
+      const conn = peer.connect(userId);
 
-  });
-  call.on('close', () => {
-      delete peers[userId];
-  })},1000);
+        //data connection for sending the name of calling user to the called user
+        conn.on('open', ()=>{
+          conn.send(user);
+        });
+       
+    setTimeout(()=>{
+    const call = peer.call(userId, stream);
+    peers[call.peer] = {'call':call,'name':userName};
+    const video = document.createElement("video");
+    let f_call=0;
+    call.on("stream", (userVideoStream) => {
+      f_call+=1;
+      if(f_call%2==0) addVideoStream(video, userVideoStream,userName,call.peer);
+
+    });
+    call.on('close', () => {
+        delete peers[userId];
+    })}
+    ,500);
+  }else{
+    //socket.emit('limit_reached', socketId);
+    const conn = peer.connect(userId);
+
+        //data connection for sending the name of calling user to the called user
+        conn.on('open', ()=>{
+          conn.send('-1');
+        });
+       
+  }
+  
 };
 
 socket.on('user-disconnected', (peerId,name) => {
@@ -132,19 +154,29 @@ socket.on("notify", ( userName) => {
 
 //socket call back going to other participants 
 socket.on('user-raised-hand', (userId, userName) =>{
-  console.log("raised hand someone")
   if(userId!==peer.id){
     console.log(userName);
    let hand =  document.getElementById(userId);
    let raise = hand.querySelector('i');
 
-    if(hand.style.borderColor==='yellow') {
-      hand.style.border = 'none';
-      raise.style.zIndex = '-1';
-    }
-    else{
-      hand.style.border = "2px solid yellow";
-      raise.style.zIndex = '1';
-    }
+    hand.style.border = "2px solid yellow";
+    raise.style.zIndex = '1';
+    
   }
+});
+
+
+socket.on('user-lowered-hand', (userId, userName) =>{
+  if(userId!==peer.id){
+    console.log(userName);
+   let hand =  document.getElementById(userId);
+   let raise = hand.querySelector('i');
+
+    hand.style.border = 'none';
+    raise.style.zIndex = '-1';
+  }
+});
+
+socket.on('user-limit-reached', () => {
+  console.log('user limit reahced');
 });
