@@ -28,7 +28,8 @@ For generating dynamic room ids
 Used for connecting application to mongodb cluster for storing messages
 <br>
 
-
+<b>Cors</b><br>
+“CORS” stands for Cross-Origin Resource Sharing. It allows you to make requests from one website to another website in the browser, which is normally prohibited by another browser policy<br>
 
 
 ## Steps to run the project locally
