@@ -9,7 +9,7 @@ Socket.IO is a JavaScript library for realtime web applications. It enables real
 <br>
 
 <b>peerjs</b><br>
-PeerJS takes the implementation of WebRTC in your browser and wraps a simple, consistent, and elegant API around it. 
+PeerJS takes the implementation of WebRTC in your browser and wraps a simple, consistent, and elegant API around it. It is used for setting up the video and data connection
 <br>
 
 <b>Nodejs</b><br>
