@@ -1,19 +1,13 @@
 # engage21_project
 
 Site is live at https://engage21-clone-project.herokuapp.com/
-<br>Screenshots
-* Homepage
-
-
-* Chat page
-
-
-* Video calling page
 
 
 ## Technologies used
 socket.io<br>
 webRTC<br>
+WebRTC (Web Real Time Communication) is an open source project that enables peer-to-peer communication between browsers or the applications (mobile). In other words, WebRTC allows you to exchange any kind of media through the web (such as video, audio and data) without any required plugin or framework.
+
 peerjs<br>
 Nodejs<br>
 
